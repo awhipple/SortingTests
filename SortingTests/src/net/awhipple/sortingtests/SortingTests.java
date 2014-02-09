@@ -4,6 +4,8 @@
  */
 package net.awhipple.sortingtests;
 
+import net.awhipple.sortingtests.utils.ArrayUtils;
+import net.awhipple.sortingtests.sorts.*;
 import java.util.Date;
 
 /**
@@ -16,22 +18,45 @@ public class SortingTests {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        long startTime, endTime;
-        
-        Comparable[] arr = ArrayUtils.randomInts(50000, 1, 100);
-        Comparable[] arrBubb = ArrayUtils.copy(arr);
-        
+        Comparable[] arr = ArrayUtils.randomInts(40000, 1, 100);
         isArraySorted(arr, "arr");
         
-        startTime = (new Date()).getTime();
-        BubbleSort.sort(arrBubb);
-        endTime = (new Date()).getTime();
-        sortTime("Bubble sort", startTime, endTime);
+        //runBubbleSorts(arr, 1);
+        runInsertionSorts(arr, 5);
+    }
+    
+    public static void runBubbleSorts(Comparable[] arr, int amount) {
+        String algName = "Bubble sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            System.out.println("Running " + algName + " on arrS");
+            startTime = (new Date()).getTime();
+            BubbleSort.sort(arrS);
+            endTime = (new Date()).getTime();
+            showSortTime(algName, startTime, endTime);
                 
-        isArraySorted(arrBubb, "arrBubb");
+            isArraySorted(arrS, "arrS");
         
-        areArraysSame(arr, "arr", arrBubb, "arrBubb");
+            areArraysSame(arr, "arr", arrS, "arrS");
+        }
+    }
+    
+    public static void runInsertionSorts(Comparable[] arr, int amount) {
+        String algName = "Insertion sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            System.out.println("Running " + algName + " on arrS");
+            startTime = (new Date()).getTime();
+            InsertionSort.sort(arrS);
+            endTime = (new Date()).getTime();
+            showSortTime(algName, startTime, endTime);
+                
+            isArraySorted(arrS, "arrS");
+        
+            areArraysSame(arr, "arr", arrS, "arrS");
+        }
     }
     
     public static void isArraySorted(Comparable[] arr, String name) {
@@ -42,13 +67,12 @@ public class SortingTests {
     }
     
     public static void areArraysSame(Comparable[] arr1, String name1, Comparable[] arr2, String name2) {
-        ArrayUtils.show(arr1, name1);
-        ArrayUtils.show(arr2, name2);
         System.out.print("Do " + name1 + " and " + name2 + " contain the same elements? ");
         System.out.println(boolToYesNo(ArrayUtils.sameElements(arr1, arr2)));
+        System.out.println();
     }
     
-    public static void sortTime(String algName, long startTime, long endTime) {
+    public static void showSortTime(String algName, long startTime, long endTime) {
         System.out.print(algName + " running time: ");
         System.out.print(endTime - startTime);
         System.out.println(" ms");
