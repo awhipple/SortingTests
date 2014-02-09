@@ -4,3 +4,10 @@
 *.jar
 *.war
 *.ear
+/SortingTests/nbproject/private/
+
+.metadata/
+SortingTests/.metadata/
+SortingTests/bin/
+SortingTests/build/
+/SortingTests/dist/
