@@ -13,16 +13,19 @@ import java.util.Date;
  * @author Aaron
  */
 public class SortingTests {
-
+    
+    public static final boolean CONDENSE_RESULTS = true;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         Comparable[] arr = ArrayUtils.randomInts(40000, 1, 100);
-        isArraySorted(arr, "arr");
         
-        //runBubbleSorts(arr, 1);
+        runBubbleSorts(arr, 5);
         runInsertionSorts(arr, 5);
+        runSelectionSorts(arr, 5);
+        runMergeSorts(arr, 5);
     }
     
     public static void runBubbleSorts(Comparable[] arr, int amount) {
@@ -30,7 +33,7 @@ public class SortingTests {
         long startTime, endTime;
         for(int i = 0; i < amount; i++) {
             Comparable[] arrS = ArrayUtils.copy(arr);
-            System.out.println("Running " + algName + " on arrS");
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
             startTime = (new Date()).getTime();
             BubbleSort.sort(arrS);
             endTime = (new Date()).getTime();
@@ -47,7 +50,7 @@ public class SortingTests {
         long startTime, endTime;
         for(int i = 0; i < amount; i++) {
             Comparable[] arrS = ArrayUtils.copy(arr);
-            System.out.println("Running " + algName + " on arrS");
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
             startTime = (new Date()).getTime();
             InsertionSort.sort(arrS);
             endTime = (new Date()).getTime();
@@ -59,24 +62,68 @@ public class SortingTests {
         }
     }
     
+    public static void runSelectionSorts(Comparable[] arr, int amount) {
+        String algName = "Selection sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
+            startTime = (new Date()).getTime();
+            SelectionSort.sort(arrS);
+            endTime = (new Date()).getTime();
+            showSortTime(algName, startTime, endTime);
+                
+            isArraySorted(arrS, "arrS");
+        
+            areArraysSame(arr, "arr", arrS, "arrS");
+        }
+    }
+    
+    public static void runMergeSorts(Comparable[] arr, int amount) {
+        String algName = "Merge sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
+            startTime = (new Date()).getTime();
+            MergeSort.sort(arrS);
+            endTime = (new Date()).getTime();
+            showSortTime(algName, startTime, endTime);
+                
+            isArraySorted(arrS, "arrS");
+        
+            areArraysSame(arr, "arr", arrS, "arrS");
+        }
+    }
+    
     public static void isArraySorted(Comparable[] arr, String name) {
-        ArrayUtils.show(arr, name);
-        System.out.print("Is " + name + " sorted? ");
-        System.out.println(boolToYesNo(ArrayUtils.isSorted(arr)));
-        System.out.println();
+        if(CONDENSE_RESULTS) {
+            if(!ArrayUtils.isSorted(arr)) System.out.println("WARNING! ARRAY NOT SORTED");
+        } else {
+            ArrayUtils.show(arr, name);
+            System.out.print("Is " + name + " sorted? ");
+            System.out.println(boolToYesNo(ArrayUtils.isSorted(arr)));
+            System.out.println();
+        }
     }
     
     public static void areArraysSame(Comparable[] arr1, String name1, Comparable[] arr2, String name2) {
-        System.out.print("Do " + name1 + " and " + name2 + " contain the same elements? ");
-        System.out.println(boolToYesNo(ArrayUtils.sameElements(arr1, arr2)));
-        System.out.println();
+        if(CONDENSE_RESULTS) {
+            if(!ArrayUtils.sameElements(arr1, arr2)) System.out.println("WARNING! ARRAYS CONTAIN DIFFERENT ELEMENTS");
+        } else {
+            System.out.print("Do " + name1 + " and " + name2 + " contain the same elements? ");
+            System.out.println(boolToYesNo(ArrayUtils.sameElements(arr1, arr2)));
+            System.out.println();
+        }
     }
     
     public static void showSortTime(String algName, long startTime, long endTime) {
         System.out.print(algName + " running time: ");
         System.out.print(endTime - startTime);
         System.out.println(" ms");
-        System.out.println();
+        if(!CONDENSE_RESULTS) {
+            System.out.println();
+        }
     }
     
     public static String boolToYesNo(boolean bool) {
