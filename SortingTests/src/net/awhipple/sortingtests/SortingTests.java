@@ -15,17 +15,26 @@ import java.util.Date;
 public class SortingTests {
     
     public static final boolean CONDENSE_RESULTS = true;
+    public static final boolean RUN_TESTS = true;
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Comparable[] arr = ArrayUtils.randomInts(40000, 1, 100);
+        Comparable[] arr = ArrayUtils.randomInts(100000, 1, 100);
         
+        /*
         runBubbleSorts(arr, 5);
+        System.out.println();
+        */
         runInsertionSorts(arr, 5);
+        System.out.println();
         runSelectionSorts(arr, 5);
+        System.out.println();
         runMergeSorts(arr, 5);
+        System.out.println();
+        
+        runQuickSorts(arr, 5);
     }
     
     public static void runBubbleSorts(Comparable[] arr, int amount) {
@@ -37,11 +46,13 @@ public class SortingTests {
             startTime = (new Date()).getTime();
             BubbleSort.sort(arrS);
             endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
                 
-            isArraySorted(arrS, "arrS");
-        
-            areArraysSame(arr, "arr", arrS, "arrS");
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
         }
     }
     
@@ -54,11 +65,13 @@ public class SortingTests {
             startTime = (new Date()).getTime();
             InsertionSort.sort(arrS);
             endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
                 
-            isArraySorted(arrS, "arrS");
-        
-            areArraysSame(arr, "arr", arrS, "arrS");
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
         }
     }
     
@@ -71,11 +84,13 @@ public class SortingTests {
             startTime = (new Date()).getTime();
             SelectionSort.sort(arrS);
             endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
                 
-            isArraySorted(arrS, "arrS");
-        
-            areArraysSame(arr, "arr", arrS, "arrS");
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
         }
     }
     
@@ -88,11 +103,34 @@ public class SortingTests {
             startTime = (new Date()).getTime();
             MergeSort.sort(arrS);
             endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
                 
-            isArraySorted(arrS, "arrS");
-        
-            areArraysSame(arr, "arr", arrS, "arrS");
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
+        }
+    }
+    
+    public static void runQuickSorts(Comparable[] arr, int amount) {
+        String algName = "Quick sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
+            
+            startTime = (new Date()).getTime();
+            QuickSort.sort(arrS);
+            endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            showSortTime(algName, startTime, endTime);
+                
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
         }
     }
     
