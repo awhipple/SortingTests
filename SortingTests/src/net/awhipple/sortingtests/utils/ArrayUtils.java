@@ -62,12 +62,28 @@ public class ArrayUtils {
         return true;
     }
     
-    //Returns an array of ints randing from min to max with size size
-    public static Comparable[] randomInts(int size, int min, int max) {
-        Comparable[] arr = new Comparable[size];
-        for(int i = 0; i < size; i++) {
+    //Returns an array of ints ranging from min to max with size s
+    public static Comparable[] randomInts(int s, int min, int max) {
+        Comparable[] arr = new Comparable[s];
+        for(int i = 0; i < s; i++) {
             arr[i] = (int)Math.floor(Math.random()*(max-min+1)+min);
         }
         return arr;
+    }
+
+    public static void showAndMark(Comparable[] arr, String arrName, int i, int j, int s, int e) {
+        if(!arrName.isEmpty()) System.out.print(arrName + ": ");
+        for(int a = 0; a < arr.length; a++) {
+            String sep = a < arr.length - 1 ? ", " : "";
+            if(a==s) System.out.print("<<");
+            if(a==i) System.out.print("(*");
+            if(a==j) System.out.print("(*");
+            System.out.print(arr[a]);
+            if(a==i) System.out.print("*)");
+            if(a==j) System.out.print("*)");
+            if(a==e) System.out.print(">>");
+            System.out.print(sep);
+        }
+        System.out.println();
     }
 }

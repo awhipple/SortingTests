@@ -16,12 +16,13 @@ public class SortingTests {
     
     public static final boolean CONDENSE_RESULTS = true;
     public static final boolean RUN_TESTS = true;
+    public static final int NUM_RUNS = 1;
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Comparable[] arr = ArrayUtils.randomInts(1000000, 1, 100);
+        Comparable[] arr = ArrayUtils.randomInts(20, 1, 100);
         
         /*
         runBubbleSorts(arr, 5);
@@ -34,7 +35,8 @@ public class SortingTests {
         System.out.println();
         */
         
-        runQuickSorts(arr, 5);
+        runHoareQuickSorts(arr, NUM_RUNS);
+        runNoBoundsQuickSorts(arr, NUM_RUNS);
     }
     
     public static void runBubbleSorts(Comparable[] arr, int amount) {
@@ -113,8 +115,8 @@ public class SortingTests {
         }
     }
     
-    public static void runQuickSorts(Comparable[] arr, int amount) {
-        String algName = "Quick sort";
+    public static void runHoareQuickSorts(Comparable[] arr, int amount) {
+        String algName = "Hoare Quick sort";
         long startTime, endTime;
         for(int i = 0; i < amount; i++) {
             Comparable[] arrS = ArrayUtils.copy(arr);
@@ -122,7 +124,28 @@ public class SortingTests {
             if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
             
             startTime = (new Date()).getTime();
-            QuickSort.sort(arrS);
+            QuickSortHoare.sort(arrS);
+            endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            showSortTime(algName, startTime, endTime);
+                
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
+        }
+    }
+    
+    public static void runNoBoundsQuickSorts(Comparable[] arr, int amount) {
+        String algName = "No bounds check quick sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
+            
+            startTime = (new Date()).getTime();
+            QuickSortNoBounds.sort(arrS);
             endTime = (new Date()).getTime();
             if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
