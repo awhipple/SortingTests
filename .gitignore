@@ -11,3 +11,5 @@ SortingTests/.metadata/
 SortingTests/bin/
 SortingTests/build/
 /SortingTests/dist/
+/nbproject/private/
+/build/
