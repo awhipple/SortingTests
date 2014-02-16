@@ -21,18 +21,18 @@ public class SortingTests {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Comparable[] arr = ArrayUtils.randomInts(100000, 1, 100);
+        Comparable[] arr = ArrayUtils.randomInts(1000000, 1, 100);
         
         /*
         runBubbleSorts(arr, 5);
         System.out.println();
-        */
         runInsertionSorts(arr, 5);
         System.out.println();
         runSelectionSorts(arr, 5);
         System.out.println();
         runMergeSorts(arr, 5);
         System.out.println();
+        */
         
         runQuickSorts(arr, 5);
     }
@@ -168,3 +168,5 @@ public class SortingTests {
         return bool ? "Yes" : "No";
     }
 }
+
+//Insight... My Array verification step was taking forever when I went to 1 mil elements. New method works far better.

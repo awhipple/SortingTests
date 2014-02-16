@@ -4,6 +4,8 @@
  */
 package net.awhipple.sortingtests.utils;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Aaron
@@ -36,18 +38,18 @@ public class ArrayUtils {
     
     //Returns true if the arrays contain the same elements, ignoring order
     public static boolean sameElements(Comparable[] arr1, Comparable[] arr2) {
-        if(arr1.length != arr2.length) return false;
-        Comparable[] testArray = copy(arr2);
+        HashMap<Comparable, Integer> map = new HashMap<>();
         for(int i = 0; i < arr1.length; i++) {
-            boolean foundCopy = false;
-            for(int j = 0; j < testArray.length; j++) {
-                if(arr1[i].equals(testArray[j])) {
-                    testArray[j] = null;
-                    foundCopy = true;
-                    break;
-                }
+            if(map.containsKey(arr1[i])) {
+                map.put(arr1[i], map.remove(arr1[i])+1);
+            } else {
+                map.put(arr1[i], 1);
             }
-            if(!foundCopy) return false;
+        }
+        for(int i = 0; i < arr2.length; i++) {
+            if(!map.containsKey(arr2[i])) return false;
+            Integer remaining = map.remove(arr2[i])-1;
+            if(remaining > 0) map.put(arr2[i], remaining);
         }
         return true;
     }
