@@ -34,7 +34,7 @@ public class SortingTests {
         System.out.println();
         */
         
-        runQuickSorts(arr, 5);
+        runHoareQuickSorts(arr, 5);
     }
     
     public static void runBubbleSorts(Comparable[] arr, int amount) {
@@ -113,8 +113,8 @@ public class SortingTests {
         }
     }
     
-    public static void runQuickSorts(Comparable[] arr, int amount) {
-        String algName = "Quick sort";
+    public static void runHoareQuickSorts(Comparable[] arr, int amount) {
+        String algName = "Hoare Quick sort";
         long startTime, endTime;
         for(int i = 0; i < amount; i++) {
             Comparable[] arrS = ArrayUtils.copy(arr);
@@ -122,7 +122,7 @@ public class SortingTests {
             if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
             
             startTime = (new Date()).getTime();
-            QuickSort.sort(arrS);
+            QuickSortHoare.sort(arrS);
             endTime = (new Date()).getTime();
             if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
