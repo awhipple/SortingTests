@@ -70,4 +70,13 @@ public class ArrayUtils {
         }
         return arr;
     }
+    
+    public static void reverseArray(Comparable[] arr) {
+        int arrayHalf = (int)(arr.length/2);
+        for(int i = 0; i < arrayHalf; i++) {
+            Comparable temp = arr[i];
+            arr[i] = arr[arr.length-i-1];
+            arr[arr.length-i-1] = temp;
+        }
+    }
 }

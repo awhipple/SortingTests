@@ -21,7 +21,11 @@ public class SortingTests {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Comparable[] arr = ArrayUtils.randomInts(500000, 1, 100);
+        Comparable[] random = ArrayUtils.randomInts(300000, 1, 100);
+        Comparable[] sorted = ArrayUtils.copy(random);
+        WhippleSort.sort(sorted);
+        Comparable[] reversed = ArrayUtils.copy(sorted);
+        ArrayUtils.reverseArray(reversed);
         
         /*
         runBubbleSorts(arr, 5);
@@ -34,8 +38,17 @@ public class SortingTests {
         System.out.println();
         */
         
-        runHoareQuickSorts(arr, 5);
-        runWhippleSorts(arr, 5);
+        runHoareQuickSorts(random, 5);
+        System.out.println();
+        runHoareQuickSorts(sorted, 5);
+        System.out.println();
+        //runHoareQuickSorts(reversed, 5);
+        System.out.println();
+        runWhippleSorts(random, 5);
+        System.out.println();
+        runWhippleSorts(sorted, 5);
+        System.out.println();
+        runWhippleSorts(reversed, 5);
     }
     
     public static void runBubbleSorts(Comparable[] arr, int amount) {
