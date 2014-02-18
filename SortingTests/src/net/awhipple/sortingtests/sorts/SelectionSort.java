@@ -8,8 +8,9 @@ package net.awhipple.sortingtests.sorts;
  *
  * @author Aaron
  */
-public class SelectionSort {
-    public static void sort(Comparable[] arr) {
+public class SelectionSort implements Sort{
+    @Override
+    public void sort(Comparable[] arr) {
         for(int i = 0; i < arr.length-1; i++) {
             int smallestIndex = i;
             Comparable smallestValue = arr[i];

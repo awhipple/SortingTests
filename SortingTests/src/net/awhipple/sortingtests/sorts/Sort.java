@@ -8,9 +8,6 @@ package net.awhipple.sortingtests.sorts;
  *
  * @author Aaron
  */
-public class MergeSort implements Sort{
-    @Override
-    public void sort(Comparable[] arr) {
-        
-    }
+public interface Sort {
+    public void sort(Comparable[] arr);
 }

@@ -23,7 +23,7 @@ public class SortingTests {
     public static void main(String[] args) {
         Comparable[] random = ArrayUtils.randomInts(300000, 1, 100);
         Comparable[] sorted = ArrayUtils.copy(random);
-        WhippleSort.sort(sorted);
+        (new WhippleSort()).sort(sorted);
         Comparable[] reversed = ArrayUtils.copy(sorted);
         ArrayUtils.reverseArray(reversed);
         
@@ -38,135 +38,34 @@ public class SortingTests {
         System.out.println();
         */
         
-        runHoareQuickSorts(random, 5);
+        Sort hoareQuickSort = new QuickSortHoare();
+        runSorts(random, hoareQuickSort, "Hoare Quick Sort on random array", 5);
+        runSorts(sorted, hoareQuickSort, "Hoare Quick Sort on sorted array", 5);
+        //runSorts(reversed, hoareQuickSort, "Hoare Quick Sort on reversed array", 5);
+        
+        Sort whippleSort = new WhippleSort();
+        runSorts(random, whippleSort, "Whipple Sort on random array", 5);
+        runSorts(sorted, whippleSort, "Whipple Sort on sorted array", 5);
+        runSorts(reversed, whippleSort, "Whipple Sort on reversed array", 5);
+    }
+    
+    public static void runSorts(Comparable[] arr, Sort sort, String algName, int trials) {
+        long startTime, endTime;
+        for(int i = 0; i < trials; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
+            startTime = (new Date()).getTime();
+            sort.sort(arrS);
+            endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            showSortTime(algName, startTime, endTime);
+                
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
+        }
         System.out.println();
-        runHoareQuickSorts(sorted, 5);
-        System.out.println();
-        //runHoareQuickSorts(reversed, 5);
-        System.out.println();
-        runWhippleSorts(random, 5);
-        System.out.println();
-        runWhippleSorts(sorted, 5);
-        System.out.println();
-        runWhippleSorts(reversed, 5);
-    }
-    
-    public static void runBubbleSorts(Comparable[] arr, int amount) {
-        String algName = "Bubble sort";
-        long startTime, endTime;
-        for(int i = 0; i < amount; i++) {
-            Comparable[] arrS = ArrayUtils.copy(arr);
-            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
-            startTime = (new Date()).getTime();
-            BubbleSort.sort(arrS);
-            endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            showSortTime(algName, startTime, endTime);
-                
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
-            }
-        }
-    }
-    
-    public static void runInsertionSorts(Comparable[] arr, int amount) {
-        String algName = "Insertion sort";
-        long startTime, endTime;
-        for(int i = 0; i < amount; i++) {
-            Comparable[] arrS = ArrayUtils.copy(arr);
-            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
-            startTime = (new Date()).getTime();
-            InsertionSort.sort(arrS);
-            endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            showSortTime(algName, startTime, endTime);
-                
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
-            }
-        }
-    }
-    
-    public static void runSelectionSorts(Comparable[] arr, int amount) {
-        String algName = "Selection sort";
-        long startTime, endTime;
-        for(int i = 0; i < amount; i++) {
-            Comparable[] arrS = ArrayUtils.copy(arr);
-            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
-            startTime = (new Date()).getTime();
-            SelectionSort.sort(arrS);
-            endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            showSortTime(algName, startTime, endTime);
-                
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
-            }
-        }
-    }
-    
-    public static void runMergeSorts(Comparable[] arr, int amount) {
-        String algName = "Merge sort";
-        long startTime, endTime;
-        for(int i = 0; i < amount; i++) {
-            Comparable[] arrS = ArrayUtils.copy(arr);
-            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
-            startTime = (new Date()).getTime();
-            MergeSort.sort(arrS);
-            endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            showSortTime(algName, startTime, endTime);
-                
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
-            }
-        }
-    }
-    
-    public static void runHoareQuickSorts(Comparable[] arr, int amount) {
-        String algName = "Hoare Quick sort";
-        long startTime, endTime;
-        for(int i = 0; i < amount; i++) {
-            Comparable[] arrS = ArrayUtils.copy(arr);
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
-            
-            startTime = (new Date()).getTime();
-            QuickSortHoare.sort(arrS);
-            endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            showSortTime(algName, startTime, endTime);
-                
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
-            }
-        }
-    }
-    
-    public static void runWhippleSorts(Comparable[] arr, int amount) {
-        String algName = "Whipple sort";
-        long startTime, endTime;
-        for(int i = 0; i < amount; i++) {
-            Comparable[] arrS = ArrayUtils.copy(arr);
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
-            
-            startTime = (new Date()).getTime();
-            WhippleSort.sort(arrS);
-            endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
-            showSortTime(algName, startTime, endTime);
-                
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
-            }
-        }
     }
     
     public static void isArraySorted(Comparable[] arr, String name) {

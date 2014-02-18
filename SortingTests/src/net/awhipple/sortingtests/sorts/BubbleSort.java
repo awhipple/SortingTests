@@ -8,8 +8,9 @@ package net.awhipple.sortingtests.sorts;
  *
  * @author Aaron
  */
-public class BubbleSort {
-    public static void sort(Comparable[] arr) {
+public class BubbleSort implements Sort{
+    @Override
+    public void sort(Comparable[] arr) {
         for(int i = arr.length-2; i >= 0; i--) {
             for(int a = 0; a <= i; a++) {
                 if(arr[a].compareTo(arr[a+1]) > 0) {

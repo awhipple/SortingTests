@@ -13,12 +13,13 @@ package net.awhipple.sortingtests.sorts;
  * 
  * @author Aaron
  */
-public class QuickSortHoare {
-    public static void sort(Comparable[] arr) {
+public class QuickSortHoare implements Sort{
+    @Override
+    public void sort(Comparable[] arr) {
         partition(arr, 0, arr.length-1);
     }
     
-    private static void partition(Comparable[] arr, int s, int e) {
+    private void partition(Comparable[] arr, int s, int e) {
         if(e-s <= 0) return;
         swap(arr, s+1, smallestElement(arr, s, e));
         swap(arr, e, largestElement(arr, s, e));
@@ -37,13 +38,13 @@ public class QuickSortHoare {
         partition(arr, i, e);
     }
     
-    private static void swap(Comparable[] arr, int a, int b) {
+    private void swap(Comparable[] arr, int a, int b) {
         Comparable temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
     }
     
-    private static int largestElement(Comparable[] arr, int s, int e) {
+    private int largestElement(Comparable[] arr, int s, int e) {
         int p = s;
         Comparable largest = arr[p];
         for(int i = s+1; i <= e; i++) {
@@ -55,7 +56,7 @@ public class QuickSortHoare {
         return p;
     }
     
-    private static int smallestElement(Comparable[] arr, int s, int e) {
+    private int smallestElement(Comparable[] arr, int s, int e) {
         int p = s;
         Comparable smallest = arr[p];
         for(int i = s+1; i <= e; i++) {

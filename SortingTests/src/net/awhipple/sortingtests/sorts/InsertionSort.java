@@ -8,8 +8,9 @@ package net.awhipple.sortingtests.sorts;
  *
  * @author Aaron
  */
-public class InsertionSort {
-    public static void sort(Comparable[] arr) {
+public class InsertionSort implements Sort{
+    @Override
+    public void sort(Comparable[] arr) {
         for(int i = 1; i < arr.length; i++) {
             for(int j = i; j > 0; j--) {
                 if(arr[j].compareTo(arr[j-1]) < 0) {

@@ -14,8 +14,9 @@ import java.util.Set;
  *
  * @author Aaron
  */
-public class WhippleSort {
-    public static void sort(Comparable[] arr) {
+public class WhippleSort implements Sort{
+    @Override
+    public void sort(Comparable[] arr) {
         Map<Comparable, Integer> myMap = new HashMap<>();
         for(int i = 0; i < arr.length; i++) {
             Integer cur = myMap.remove(arr[i]);
@@ -38,7 +39,7 @@ public class WhippleSort {
         }
     }
     
-    public static class EntryComp implements Comparator<Entry<Comparable, Integer>> {
+    public class EntryComp implements Comparator<Entry<Comparable, Integer>> {
         @Override
         public int compare(Entry<Comparable, Integer> t1, Entry<Comparable, Integer> t2) {
             return (t1.getKey().compareTo(t2.getKey()));
