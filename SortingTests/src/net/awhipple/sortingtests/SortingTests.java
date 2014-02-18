@@ -35,6 +35,7 @@ public class SortingTests {
         */
         
         runHoareQuickSorts(arr, 5);
+        runWhippleSorts(arr, 5);
     }
     
     public static void runBubbleSorts(Comparable[] arr, int amount) {
@@ -123,6 +124,27 @@ public class SortingTests {
             
             startTime = (new Date()).getTime();
             QuickSortHoare.sort(arrS);
+            endTime = (new Date()).getTime();
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            showSortTime(algName, startTime, endTime);
+                
+            if(RUN_TESTS) {
+                isArraySorted(arrS, "arrS");
+                areArraysSame(arr, "arr", arrS, "arrS");
+            }
+        }
+    }
+    
+    public static void runWhippleSorts(Comparable[] arr, int amount) {
+        String algName = "Whipple sort";
+        long startTime, endTime;
+        for(int i = 0; i < amount; i++) {
+            Comparable[] arrS = ArrayUtils.copy(arr);
+            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
+            if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
+            
+            startTime = (new Date()).getTime();
+            WhippleSort.sort(arrS);
             endTime = (new Date()).getTime();
             if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
