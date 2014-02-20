@@ -4,9 +4,12 @@
  */
 package net.awhipple.sortingtests;
 
+import net.awhipple.sortingtests.sorts.quicksorts.QuickSortHoare;
 import net.awhipple.sortingtests.utils.ArrayUtils;
 import net.awhipple.sortingtests.sorts.*;
 import java.util.Date;
+import net.awhipple.sortingtests.sorts.quicksorts.QuickSortRandomPart;
+import net.awhipple.sortingtests.sorts.quicksorts.QuickSortSmallInsertion;
 
 /**
  *
@@ -16,37 +19,36 @@ public class SortingTests {
     
     public static final boolean CONDENSE_RESULTS = true;
     public static final boolean RUN_TESTS = true;
+    public static final int NUM_ELEMENTS = 300000;
+    public static final int ELEMENT_LOW = 1, ELEMENT_HIGH = 100;
+    public static final int NUM_TESTS = 5;
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Comparable[] random = ArrayUtils.randomInts(300000, 1, 100);
+        Comparable[] random = ArrayUtils.randomInts(NUM_ELEMENTS, ELEMENT_LOW, ELEMENT_HIGH);
         Comparable[] sorted = ArrayUtils.copy(random);
         (new WhippleSort()).sort(sorted);
         Comparable[] reversed = ArrayUtils.copy(sorted);
         ArrayUtils.reverseArray(reversed);
+                
+        try {
+            runThreeSorts(new QuickSortHoare(), "Hoare Quick Sort", random, sorted, reversed, NUM_TESTS);
+        } catch (StackOverflowError ex) {
+            System.out.println("Stack Overflow");
+            System.out.println();
+        }
+
+        runThreeSorts(new QuickSortRandomPart(), "Random Partition Quick Sort", random, sorted, reversed, NUM_TESTS);
         
-        /*
-        runBubbleSorts(arr, 5);
-        System.out.println();
-        runInsertionSorts(arr, 5);
-        System.out.println();
-        runSelectionSorts(arr, 5);
-        System.out.println();
-        runMergeSorts(arr, 5);
-        System.out.println();
-        */
-        
-        Sort hoareQuickSort = new QuickSortHoare();
-        runSorts(random, hoareQuickSort, "Hoare Quick Sort on random array", 5);
-        runSorts(sorted, hoareQuickSort, "Hoare Quick Sort on sorted array", 5);
-        //runSorts(reversed, hoareQuickSort, "Hoare Quick Sort on reversed array", 5);
-        
-        Sort whippleSort = new WhippleSort();
-        runSorts(random, whippleSort, "Whipple Sort on random array", 5);
-        runSorts(sorted, whippleSort, "Whipple Sort on sorted array", 5);
-        runSorts(reversed, whippleSort, "Whipple Sort on reversed array", 5);
+        runThreeSorts(new QuickSortSmallInsertion(), "Small Insertion Quick Sort", random, sorted, reversed, NUM_TESTS);
+    }
+    
+    public static void runThreeSorts(Sort sort, String algName, Comparable[] random, Comparable[] sorted, Comparable[] reversed, int numTests) {
+        runSorts(random, sort, algName + " on random array", numTests);
+        runSorts(sorted, sort, algName + " on sorted array", numTests);
+        runSorts(reversed, sort, algName + " on reversed array", numTests);
     }
     
     public static void runSorts(Comparable[] arr, Sort sort, String algName, int trials) {
@@ -57,7 +59,6 @@ public class SortingTests {
             startTime = (new Date()).getTime();
             sort.sort(arrS);
             endTime = (new Date()).getTime();
-            if(!CONDENSE_RESULTS) ArrayUtils.show(arrS);
             showSortTime(algName, startTime, endTime);
                 
             if(RUN_TESTS) {

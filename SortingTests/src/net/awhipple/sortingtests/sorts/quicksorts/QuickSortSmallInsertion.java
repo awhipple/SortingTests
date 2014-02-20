@@ -2,25 +2,42 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.awhipple.sortingtests.sorts;
+package net.awhipple.sortingtests.sorts.quicksorts;
+
+import net.awhipple.sortingtests.sorts.Sort;
 
 /**
  *
  * Algorithm: Hoare
  * Bounds Checking: True
- * Partition Select: First
- * Runs Insertion on short lists: False
+ * Partition Select: Random
+ * Runs Insertion on short lists: True
  * 
  * @author Aaron
  */
-public class QuickSortHoare implements Sort{
+public class QuickSortSmallInsertion implements Sort{
     @Override
     public void sort(Comparable[] arr) {
         partition(arr, 0, arr.length-1);
     }
     
     private void partition(Comparable[] arr, int s, int e) {
-        if(e-s <= 0) return;
+        if(e-s <= 1) return;
+        if(e-s <= 5000) {
+            for(int i = s+1; i <= e; i++) {
+                for(int j = i; j > s; j--) {
+                    if(arr[j].compareTo(arr[j-1]) < 0) {
+                        Comparable temp = arr[j];
+                        arr[j] = arr[j-1];
+                        arr[j-1] = temp;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return;
+        }
+        swap(arr, s, (int)(Math.random()*(e-s+1)+s));
         swap(arr, s+1, smallestElement(arr, s, e));
         swap(arr, e, largestElement(arr, s, e));
         Comparable p = arr[s];
