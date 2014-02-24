@@ -8,6 +8,7 @@ import net.awhipple.sortingtests.sorts.quicksorts.QuickSortHoare;
 import net.awhipple.sortingtests.utils.ArrayUtils;
 import net.awhipple.sortingtests.sorts.*;
 import java.util.Date;
+import net.awhipple.sortingtests.sorts.quicksorts.QuickSortMedianOfThree;
 import net.awhipple.sortingtests.sorts.quicksorts.QuickSortRandomPart;
 import net.awhipple.sortingtests.sorts.quicksorts.QuickSortSmallInsertion;
 
@@ -19,7 +20,7 @@ public class SortingTests {
     
     public static final boolean CONDENSE_RESULTS = true;
     public static final boolean RUN_TESTS = true;
-    public static final int NUM_ELEMENTS = 300000;
+    public static final int NUM_ELEMENTS = 1000000;
     public static final int ELEMENT_LOW = 1, ELEMENT_HIGH = 100;
     public static final int NUM_TESTS = 5;
     
@@ -32,7 +33,7 @@ public class SortingTests {
         (new WhippleSort()).sort(sorted);
         Comparable[] reversed = ArrayUtils.copy(sorted);
         ArrayUtils.reverseArray(reversed);
-                
+
         try {
             runThreeSorts(new QuickSortHoare(), "Hoare Quick Sort", random, sorted, reversed, NUM_TESTS);
         } catch (StackOverflowError ex) {
@@ -43,6 +44,8 @@ public class SortingTests {
         runThreeSorts(new QuickSortRandomPart(), "Random Partition Quick Sort", random, sorted, reversed, NUM_TESTS);
         
         runThreeSorts(new QuickSortSmallInsertion(), "Small Insertion Quick Sort", random, sorted, reversed, NUM_TESTS);
+        
+        runThreeSorts(new QuickSortMedianOfThree(), "Median of Three Quick Sort", random, sorted, reversed, NUM_TESTS);
     }
     
     public static void runThreeSorts(Sort sort, String algName, Comparable[] random, Comparable[] sorted, Comparable[] reversed, int numTests) {

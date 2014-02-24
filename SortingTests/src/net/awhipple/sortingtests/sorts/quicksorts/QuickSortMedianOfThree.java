@@ -9,12 +9,12 @@ import net.awhipple.sortingtests.sorts.Sort;
 /**
  *
  * Algorithm: Hoare
- * Partition Select: Random
+ * Partition Select: Median of Three
  * Runs Insertion on short lists: True
  * 
  * @author Aaron
  */
-public class QuickSortSmallInsertion implements Sort{
+public class QuickSortMedianOfThree implements Sort{
     @Override
     public void sort(Comparable[] arr) {
         partition(arr, 0, arr.length-1);
@@ -36,7 +36,23 @@ public class QuickSortSmallInsertion implements Sort{
             }
             return;
         }
-        swap(arr, s, (int)(Math.random()*(e-s+1)+s));
+        int m = (int)((s+e)/2);
+        int med, other;
+        if(arr[s].compareTo(arr[m])<0) {
+            med = s;
+            other = m;
+        } else {
+            med = m;
+            other = s;
+        }
+        if(arr[med].compareTo(arr[e])<0) {
+            if(arr[e].compareTo(arr[other])<0) {
+                med = e;
+            } else {
+                med = other;
+            }
+        }
+        swap(arr, s, med);
         Comparable p = arr[s];
         int i = s - 1;
         int j = e + 1;
