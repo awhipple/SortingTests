@@ -8,6 +8,7 @@ import net.awhipple.sortingtests.sorts.quicksorts.QuickSortHoare;
 import net.awhipple.sortingtests.utils.ArrayUtils;
 import net.awhipple.sortingtests.sorts.*;
 import java.util.Date;
+import net.awhipple.sortingtests.sorts.quicksorts.QuickSortLomuto;
 import net.awhipple.sortingtests.sorts.quicksorts.QuickSortMedianOfThree;
 import net.awhipple.sortingtests.sorts.quicksorts.QuickSortRandomPart;
 import net.awhipple.sortingtests.sorts.quicksorts.QuickSortSmallInsertion;
@@ -20,7 +21,7 @@ public class SortingTests {
     
     public static final boolean CONDENSE_RESULTS = true;
     public static final boolean RUN_TESTS = true;
-    public static final int NUM_ELEMENTS = 1000000;
+    public static final int NUM_ELEMENTS = 300000;
     public static final int ELEMENT_LOW = 1, ELEMENT_HIGH = 100;
     public static final int NUM_TESTS = 5;
     
@@ -34,12 +35,8 @@ public class SortingTests {
         Comparable[] reversed = ArrayUtils.copy(sorted);
         ArrayUtils.reverseArray(reversed);
 
-        try {
-            runThreeSorts(new QuickSortHoare(), "Hoare Quick Sort", random, sorted, reversed, NUM_TESTS);
-        } catch (StackOverflowError ex) {
-            System.out.println("Stack Overflow");
-            System.out.println();
-        }
+        runThreeSorts(new QuickSortLomuto(), "Lomuto Quick Sort", random, sorted, reversed, NUM_TESTS);
+        runThreeSorts(new QuickSortHoare(), "Hoare Quick Sort", random, sorted, reversed, NUM_TESTS);
 
         runThreeSorts(new QuickSortRandomPart(), "Random Partition Quick Sort", random, sorted, reversed, NUM_TESTS);
         
@@ -60,14 +57,21 @@ public class SortingTests {
             Comparable[] arrS = ArrayUtils.copy(arr);
             if(!CONDENSE_RESULTS) System.out.println("Running " + algName + " on arrS");
             startTime = (new Date()).getTime();
-            sort.sort(arrS);
-            endTime = (new Date()).getTime();
-            showSortTime(algName, startTime, endTime);
+            try {
+                sort.sort(arrS);
+                endTime = (new Date()).getTime();
+                showSortTime(algName, startTime, endTime);
                 
-            if(RUN_TESTS) {
-                isArraySorted(arrS, "arrS");
-                areArraysSame(arr, "arr", arrS, "arrS");
+                if(RUN_TESTS) {
+                    isArraySorted(arrS, "arrS");
+                    areArraysSame(arr, "arr", arrS, "arrS");
+                }
+            } catch(StackOverflowError ex) {
+                System.out.println("StackOverFlow Error on " + algName);
+                System.out.println();
+                return;
             }
+            
         }
         System.out.println();
     }
