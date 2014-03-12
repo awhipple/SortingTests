@@ -52,8 +52,7 @@ public class QuickSortMedianOfThree implements Sort{
                 med = other;
             }
         }
-        swap(arr, s, med);
-        Comparable p = arr[s];
+        Comparable p = arr[med];
         int i = s - 1;
         int j = e + 1;
         while(true) {
@@ -63,7 +62,6 @@ public class QuickSortMedianOfThree implements Sort{
             if(i < j) { swap(arr, i, j);}
             else      { break; }
         }
-        swap(arr, s, j);
         partition(arr, s, j);
         partition(arr, j+1, e);
     }

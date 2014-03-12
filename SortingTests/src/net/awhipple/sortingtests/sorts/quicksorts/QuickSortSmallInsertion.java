@@ -36,8 +36,8 @@ public class QuickSortSmallInsertion implements Sort{
             }
             return;
         }
-        swap(arr, s, (int)(Math.random()*(e-s+1)+s));
-        Comparable p = arr[s];
+        
+        Comparable p = arr[(int)(Math.random()*(e-s+1)+s)];
         int i = s - 1;
         int j = e + 1;
         while(true) {
@@ -47,7 +47,6 @@ public class QuickSortSmallInsertion implements Sort{
             if(i < j) { swap(arr, i, j);}
             else      { break; }
         }
-        swap(arr, s, j);
         partition(arr, s, j);
         partition(arr, j+1, e);
     }

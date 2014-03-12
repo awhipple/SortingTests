@@ -32,7 +32,6 @@ public class QuickSortHoare implements Sort{
             if(i < j) { swap(arr, i, j);}
             else      { break; }
         }
-        swap(arr, s, j);
         partition(arr, s, j);
         partition(arr, j+1, e);
     }

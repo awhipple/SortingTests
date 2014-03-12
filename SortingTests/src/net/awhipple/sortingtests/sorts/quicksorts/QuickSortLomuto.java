@@ -19,7 +19,7 @@ public class QuickSortLomuto implements Sort{
     }
     
     private void partition(Comparable[] arr, int s, int e) {
-        if(e-s < 0) return;
+        if(e-s < 1) return;
         Comparable p = arr[s]; // p <- A[l]
         int split = s;
         for(int j = s+1; j <= e; j++) { // for i <- l + 1 to r do

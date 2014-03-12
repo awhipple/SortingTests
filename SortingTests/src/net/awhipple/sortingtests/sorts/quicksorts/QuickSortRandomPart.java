@@ -22,8 +22,7 @@ public class QuickSortRandomPart implements Sort{
     
     private void partition(Comparable[] arr, int s, int e) {
         if(e-s <= 0) return;
-        swap(arr, s, (int)(Math.random()*(e-s+1)+s));
-        Comparable p = arr[s];
+        Comparable p = arr[(int)(Math.random()*(e-s+1)+s)];
         int i = s - 1;
         int j = e + 1;
         while(true) {
@@ -33,7 +32,6 @@ public class QuickSortRandomPart implements Sort{
             if(i < j) { swap(arr, i, j);}
             else      { break; }
         }
-        swap(arr, s, j);
         partition(arr, s, j);
         partition(arr, j+1, e);
     }
